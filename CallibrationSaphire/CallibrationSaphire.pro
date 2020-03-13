@@ -15,12 +15,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+
+LIBS += C:\Users\fura\Documents\ProgramsAndSomeScripts\CallibrationSaphire\ltr\lib\mingw\libltr27api.a
+
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sapfir.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    sapfir.h
 
 FORMS += \
     mainwindow.ui
