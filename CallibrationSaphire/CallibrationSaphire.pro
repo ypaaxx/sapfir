@@ -16,7 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-LIBS += C:\Users\fura\Documents\ProgramsAndSomeScripts\CallibrationSaphire\ltr\lib\mingw\libltr27api.a
+#LIBS += C:\Users\fura\Documents\ProgramsAndSomeScripts\CallibrationSaphire\ltr\lib\mingw64\libltr27api.a
+LIBS += C:\Users\fura\Documents\ProgramsAndSomeScripts\CallibrationSaphire\ltr/bin/x64/ltr27api.dll
 
 SOURCES += \
     main.cpp \

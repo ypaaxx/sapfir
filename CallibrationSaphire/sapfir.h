@@ -6,8 +6,9 @@
 #include <QVector>
 
 #include <math.h>
-
 #include <ltr/include/ltr27api.h>
+
+
 
 class Sapfir: public QThread
 {
