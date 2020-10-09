@@ -8,13 +8,12 @@
 #include <math.h>
 #include <ltr/include/ltr27api.h>
 
-
-
 class Sapfir: public QThread
 {
     Q_OBJECT
 
     TLTR27 *ltr = new TLTR27;
+
     DWORD data[16*1000];     //Сырой массив
     double niceData[2];//Обработанный
 
@@ -33,13 +32,14 @@ class Sapfir: public QThread
 public:
     Sapfir();
     ~Sapfir(){
-        stopLTR();
+        //stopLTR();
     }
     qint8 init(){
         Pm.resize(N);
         Pc.resize(N);
+
         // Подключение к LTR27 по мануалу через внешнюю библиотеку
-        if (LTR27_Init(ltr) == LTR_OK){
+        if (LTR27_Init(ltr) == 0){
             int resOpen = LTR27_Open(ltr, SADDR_DEFAULT, SPORT_DEFAULT, "", CC_MODULE1);
             if (resOpen == LTR_WARNING_MODULE_IN_USE){
                 qWarning() << "LTR_WARNING_MODULE_IN_USE";
@@ -71,9 +71,11 @@ public:
         Pm.resize(N);
         Pc.resize(N);
     }
+
     void startLTR(){
         qDebug() << "Start" << LTR27_ADCStart(ltr);
     }
+
     void stopLTR(){
         qDebug() << "Stop" << LTR27_ADCStop(ltr);
     }
@@ -107,38 +109,38 @@ public: signals:
 public slots:
     // Снимает показание с сапфиров, осредняет и вычисляет СКО
     void run(){
-        //каждое срабатывание по кругу забивает массив данных
-        static quint8 counter = 0;
-        //Снятие давления
-        if(counter > (N-1)) counter = 0;
-        getData(Pm[counter], Pc[counter]);
-        emit newPm(Pm[counter]);
-        emit newPc(Pc[counter]);
-        counter++;
+//        //каждое срабатывание по кругу забивает массив данных
+//        static quint8 counter = 0;
+//        //Снятие давления
+//        if(counter > (N-1)) counter = 0;
+//        getData(Pm[counter], Pc[counter]);
+//        emit newPm(Pm[counter]);
+//        emit newPc(Pc[counter]);
+//        counter++;
 
-        //Вычисление среднего
-        Pm_a = 0;
-        for(qreal pm: Pm)
-            Pm_a += pm/N;
-        emit newPm_a(Pm_a);
-        Pc_a = 0;
-        for(qreal pc: Pc)
-            Pc_a += pc/N;
-        emit newPc_a(Pc_a);
+//        //Вычисление среднего
+//        Pm_a = 0;
+//        for(qreal pm: Pm)
+//            Pm_a += pm/N;
+//        emit newPm_a(Pm_a);
+//        Pc_a = 0;
+//        for(qreal pc: Pc)
+//            Pc_a += pc/N;
+//        emit newPc_a(Pc_a);
 
         //Вычисление СКО
-        qreal sum = 0;
-        Pm_s = 0;
-        for(qreal pm: Pm)
-            sum += pow(pm-Pm_a, 2);
-        Pm_s = sqrt(sum/(N-1));
-        emit newPm_s(Pm_s);
+//        qreal sum = 0;
+//        Pm_s = 0;
+//        for(qreal pm: Pm)
+//            sum += pow(pm-Pm_a, 2);
+//        Pm_s = sqrt(sum/(N-1));
+//        emit newPm_s(Pm_s);
 
-        sum = 0;
-        for(qreal pc: Pc)
-            sum += pow(pc-Pc_a, 2);
-        Pc_s = sqrt(sum/(N-1));
-        emit newPc_s(Pc_s);
+//        sum = 0;
+//        for(qreal pc: Pc)
+//            sum += pow(pc-Pc_a, 2);
+//        Pc_s = sqrt(sum/(N-1));
+//        emit newPc_s(Pc_s);
     }
 };
 

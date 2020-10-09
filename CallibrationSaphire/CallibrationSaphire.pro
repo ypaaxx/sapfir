@@ -15,10 +15,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-
-#LIBS += C:\Users\fura\Documents\ProgramsAndSomeScripts\CallibrationSaphire\ltr\lib\mingw64\libltr27api.a
-LIBS += C:\Users\fura\Documents\ProgramsAndSomeScripts\CallibrationSaphire\ltr/bin/x64/ltr27api.dll
-
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
@@ -31,7 +27,11 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+
+unix|win32: LIBS += -L'C:/Program Files (x86)/L-Card/ltr/lib/mingw/' -lltr27api
+
+INCLUDEPATH += 'C:/Program Files (x86)/L-Card/ltr/include'
+DEPENDPATH += 'C:/Program Files (x86)/L-Card/ltr/include'
+
+win32:!win32-g++: PRE_TARGETDEPS += 'C:/Program Files (x86)/L-Card/ltr/lib/mingw/ltr27api.lib'
+else:unix|win32-g++: PRE_TARGETDEPS += 'C:/Program Files (x86)/L-Card/ltr/lib/mingw/libltr27api.a'

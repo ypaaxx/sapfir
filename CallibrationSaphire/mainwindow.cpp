@@ -8,12 +8,16 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    qDebug() << "Start";
     ui->setupUi(this);
     //Настройка крейтов LTR
+    qDebug() << "Search LTR";
+
     if (!sapfir->init())
-        qDebug() << "Ошибка запуска LTR";
+//        qDebug() << "Ошибка запуска LTR";
 
     //Настройка таймера
+    qDebug() << "Start timer";
     timer->setInterval(T);
     connect( timer, SIGNAL(timeout()), sapfir, SLOT(run()) );
     connect( sapfir, SIGNAL(newPm(qreal)), ui->Pmlcd, SLOT(display(qreal)));
@@ -23,8 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
     chart->addSeries(series);
 
     chart->createDefaultAxes();
-    chart->axisX()->setRange(0, 60);
-    chart->axisY()->setRange(-100, 100);
+    //chart->axisX()->setRange(0, 60);
+    //chart->axisY()->setRange(-100, 100);
     QChartView *view = new QChartView(chart);
     view->setMinimumSize(800, 600);
 
@@ -41,6 +45,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
 
-    sapfir->startLTR();
+    //sapfir->startLTR();
     timer->start();
 }
